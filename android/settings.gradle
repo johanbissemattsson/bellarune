@@ -1,0 +1,3 @@
+rootProject.name = 'bellarune'
+
+include ':app'
