@@ -15,12 +15,14 @@ import {
   StyleSheet,
   PixelRatio,
   TouchableHighlight,
+  Image
 } from 'react-native';
 
 import {
-  ViroVRSceneNavigator,
   ViroARSceneNavigator
 } from 'react-viro';
+
+import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
 /*
  TODO: Insert your API key below
@@ -31,10 +33,8 @@ var sharedProps = {
 
 // Sets the default scene you want for AR and VR
 var InitialARScene = require('./js/HelloWorldSceneAR');
-var InitialVRScene = require('./js/HelloWorldScene');
 
 var UNSET = "UNSET";
-var VR_NAVIGATOR_TYPE = "VR";
 var AR_NAVIGATOR_TYPE = "AR";
 
 // This determines which type of experience to launch in, or UNSET, if the user should
@@ -49,51 +49,83 @@ export default class ViroSample extends Component {
       navigatorType : defaultNavigatorType,
       sharedProps : sharedProps
     }
-    this._getExperienceSelector = this._getExperienceSelector.bind(this);
+    this._getIntroScreen = this._getIntroScreen.bind(this);
     this._getARNavigator = this._getARNavigator.bind(this);
-    this._getVRNavigator = this._getVRNavigator.bind(this);
     this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
     this._exitViro = this._exitViro.bind(this);
+    this._renderDotIndicator = this._renderDotIndicator.bind(this);
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
     if (this.state.navigatorType == UNSET) {
-      return this._getExperienceSelector();
-    } else if (this.state.navigatorType == VR_NAVIGATOR_TYPE) {
-      return this._getVRNavigator();
+      return this._getIntroScreen();
     } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
       return this._getARNavigator();
     }
   }
 
   // Presents the user with a choice of an AR or VR experience
-  _getExperienceSelector() {
+  _getIntroScreen() {
     return (
-      <View style={localStyles.outer} >
-        <View style={localStyles.inner} >
-
-          <Text style={localStyles.titleText}>
-            Choose your desired experience:
+      <View style={styles.screenContainer}>
+      <View style={styles.screen} >
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>
+            BELLA RUNE
           </Text>
-
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>AR</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(VR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>VR</Text>
-          </TouchableHighlight>
         </View>
-      </View>
+        <IndicatorViewPager style={styles.introSlidesContainer} indicator={this._renderDotIndicator()}>
+          <View style={[styles.introSlide]}>
+            <View style={styles.introSlideImageContainer}>
+              <Image style={styles.introSlideImage} source={require('./assets/ui/img/introslide-testimage.png')} resizeMode='cover'/>
+            </View>
+            <Text style={styles.introSlideHeader}>
+              NOW AT
+            </Text>
+            <Text style={styles.introSlideBody}>
+              <Text style={styles.italic}>The Fabric of Felicity{"\n"}</Text>
+              Garage Museum of Contemporary Art
+              Moscow, Russia
+            </Text>
+          </View>
+          <View style={[styles.introSlide]}>
+            <View style={styles.introSlideImageContainer}>
+              <Image style={styles.introSlideImage} source={require('./assets/ui/img/introslide-testimage.png')} resizeMode='cover'/>
+            </View>
+            <Text style={styles.introSlideHeader}>
+              BE TRIGGER HAPPY
+            </Text>
+            <Text style={styles.introSlideBody}>
+              Point your phone/tablet towards the triggers you find, and what is in-between will be revealed
+            </Text>
+          </View>
+          <View style={[styles.introSlide]}>
+            <View style={styles.introSlideImageContainer}>
+              <Image style={styles.introSlideImage} source={require('./assets/ui/img/introslide-testimage.png')} resizeMode='cover'/>
+            </View>
+            <Text style={styles.introSlideHeader}>
+              SHARE YOUR EXPERIENCE
+            </Text>
+            <Text style={[styles.introSlideBody] }>
+              Share the photos you take with friends and family
+            </Text>  
+          </View>
+          <View style={[styles.introSlide]} />
+        </IndicatorViewPager>
+        < View style={styles.actionButtonContainer}>
+          <TouchableHighlight style={styles.actionButton} underlayColor={'#68a0ff'} onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}>
+            <Text style={styles.buttonText}>AR</Text>
+          </TouchableHighlight>
+          </View>
+        </View>
+      </View>  
     );
+  }
+
+  _renderDotIndicator() {
+    return <PagerDotIndicator pageCount={3} />;
   }
 
   // Returns the ViroARSceneNavigator which will start the AR experience
@@ -104,14 +136,6 @@ export default class ViroSample extends Component {
     );
   }
   
-  // Returns the ViroSceneNavigator which will start the VR experience
-  _getVRNavigator() {
-    return (
-      <ViroVRSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialVRScene}} onExitViro={this._exitViro}/>
-    );
-  }
-
   // This function returns an anonymous/lambda function to be used
   // by the experience selector buttons
   _getExperienceButtonOnPress(navigatorType) {
@@ -130,58 +154,89 @@ export default class ViroSample extends Component {
   }
 }
 
-var localStyles = StyleSheet.create({
-  viroContainer :{
-    flex : 1,
-    backgroundColor: "black",
+var styles = StyleSheet.create({
+  viroContainer: {
+    flex: 1,
+    backgroundColor: 'black'
   },
-  outer : {
-    flex : 1,
-    flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor: "black",
+  screenContainer: {
+    flex: 1,
+    alignItems:'stretch',
+    backgroundColor: 'black'
   },
-  inner: {
-    flex : 1,
+  screen: {
+    flex: 1,
+    alignItems:'stretch',
+    backgroundColor: '#4a1749'
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 16
+  },
+  header: {
     flexDirection: 'column',
     alignItems:'center',
-    backgroundColor: "black",
+    color: '#4f51ff',
+    fontSize: 16,
+    lineHeight: 24
   },
-  titleText: {
-    paddingTop: 30,
-    paddingBottom: 20,
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 25
+  introSlidesContainer: {
+    flex: 1,
   },
-  buttonText: {
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 20
+  introSlide: {
+    flex: 1,
+    alignItems:'center',
+
   },
-  buttons : {
-    height: 80,
-    width: 150,
-    paddingTop:20,
-    paddingBottom:20,
-    marginTop: 10,
-    marginBottom: 10,
+  introSlideImageContainer: {
+    paddingLeft: 32,
+    paddingRight: 32
+
+  },
+  introSlideImage: {
+    width: 320,
+    height: 320
+  },
+  introSlideHeader: {
+    textAlign: 'center',
+    color: '#4f51ff',
+    marginTop: 16,
+    marginBottom: 16,
+    marginLeft: 64,
+    marginRight: 64,
+    fontWeight: 'bold',
+    fontSize: 16,
+    lineHeight: 24,
+    maxWidth: 320
+  },
+  introSlideBody: {
+    textAlign: 'center',
+    color: '#b35cff',
+    marginLeft: 64,
+    marginRight: 64,
+    fontSize: 18,
+    lineHeight: 24,
+    maxWidth: 320
+  },
+  bold: {
+    fontWeight: 'bold'
+  },  
+  italic: {
+    fontStyle: 'italic'
+  },
+  actionButtonContainer: {
+    alignItems:'center',
+    marginTop: 16,
+    marginBottom: 16
+  },
+  actionButton: {
+    width: 96,
+    height: 96,
     backgroundColor:'#68a0cf',
-    borderRadius: 10,
-    borderWidth: 1,
     borderColor: '#fff',
-  },
-  exitButton : {
-    height: 50,
-    width: 100,
-    paddingTop:10,
-    paddingBottom:10,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor:'#68a0cf',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff',
+    borderRadius: 48,
+    borderWidth: 4,
   }
 });
 
