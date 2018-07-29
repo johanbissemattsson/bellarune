@@ -71,6 +71,7 @@ export default class ViroSample extends Component {
       hasExperimentalFeature: false,
     });
     
+    // fetch(0) is for caching
     firebase.config().fetch(0)
       .then(() => {
         return firebase.config().activateFetched();

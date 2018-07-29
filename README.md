@@ -57,4 +57,6 @@ If problems arise, stop app run `adb reverse tcp:8081 tcp:8081` again and press 
 3. Open build.gradle in Android Studio
 4. Select Build > Generate Signed APK (choose gvr when asked)
 
+!!! Seems to work best all from Android Studio now, so build and create signed apk in Android Studio!
+
 More info https://facebook.github.io/react-native/docs/signed-apk-android.html
