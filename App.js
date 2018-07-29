@@ -15,7 +15,8 @@ import {
   StyleSheet,
   PixelRatio,
   TouchableHighlight,
-  Image
+  Image,
+  StatusBar
 } from 'react-native';
 
 import {
@@ -70,13 +71,14 @@ export default class ViroSample extends Component {
   _getIntroScreen() {
     return (
       <View style={styles.screenContainer}>
-      <View style={styles.screen} >
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}>
-            BELLA RUNE
-          </Text>
-        </View>
-        <IndicatorViewPager style={styles.introSlidesContainer} indicator={this._renderDotIndicator()}>
+        <StatusBar hidden={true} />
+        <View style={styles.screen}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.header}>
+              BELLA RUNE
+            </Text>
+          </View>
+          <IndicatorViewPager style={styles.introSlidesContainer} indicator={this._renderDotIndicator()}>
           <View style={[styles.introSlide]}>
             <View style={styles.introSlideImageContainer}>
               <Image style={styles.introSlideImage} source={require('./assets/ui/img/introslide-testimage.png')} resizeMode='cover'/>
@@ -113,11 +115,11 @@ export default class ViroSample extends Component {
             </Text>  
           </View>
           <View style={[styles.introSlide]} />
-        </IndicatorViewPager>
-        < View style={styles.actionButtonContainer}>
-          <TouchableHighlight style={styles.actionButton} underlayColor={'#68a0ff'} onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}>
-            <Text style={styles.buttonText}>AR</Text>
-          </TouchableHighlight>
+          </IndicatorViewPager>
+          <View style={styles.actionButtonContainer}>
+            <TouchableHighlight style={styles.actionButton} underlayColor={'#68a0ff'} onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}>
+              <Text style={styles.buttonText}>AR</Text>
+            </TouchableHighlight>
           </View>
         </View>
       </View>  
@@ -131,8 +133,11 @@ export default class ViroSample extends Component {
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
     return (
-      <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
+      <View style={styles.screenContainer}>
+        <StatusBar hidden={true} />
+        <ViroARSceneNavigator {...this.state.sharedProps}
+          initialScene={{scene: InitialARScene}} />
+      </View>
     );
   }
   
