@@ -34,3 +34,27 @@ https://wiki.genexus.com/commwiki/servlet/wiki?34616,HowTo%3A+Create+an+.ipa+fil
 ## Change display name
 1. Xcode > Project *bellarune* > General > Display Name 
 1. Xcode > Project *bellarune* > Info > Bundle display Name
+
+# Building for Android with Android Studio
+Follow https://docs.viromedia.com/docs/installing-viro-android
+
+## TLDR
+1. In a terminal window, navigate to your Viro project root (not Android project root) and run the following:
+`./setup-ide.sh android`
+2. Start Android Studio
+3. File > Open
+4. Open android/build.gradle
+5. Connect device to your computer via USB. When a pop-up appears asking to "Allow USB Debugging?", select "OK".
+6. In your terminal, run this command `adb reverse tcp:8081 tcp:8081` which will reverse tether your device to your development machine. (Note: the adb command can be found under platform-tools wherever your sdk is installed, it's recommended that you add this to your environment's $PATH variable.).
+7. Run `npm start` from the project root directory to start the package server
+8. Ensure the target to the left of the green run button is set to "app" and tap on the green run play button
+
+If problems arise, stop app run `adb reverse tcp:8081 tcp:8081` again and press green play button.
+
+### Building for production
+1. `cd android`
+2. `./gradlew bundleGvrReleaseJsAndAssets`
+3. Open build.gradle in Android Studio
+4. Select Build > Generate Signed APK (choose gvr when asked)
+
+More info https://facebook.github.io/react-native/docs/signed-apk-android.html
