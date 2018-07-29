@@ -2,14 +2,49 @@ PODS:
   - AWSCore (2.6.25)
   - AWSDynamoDB (2.6.25):
     - AWSCore (= 2.6.25)
+  - Firebase/Core (5.3.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.0.1)
+  - Firebase/CoreOnly (5.3.0):
+    - FirebaseCore (= 5.0.4)
+  - Firebase/RemoteConfig (5.3.0):
+    - Firebase/Core
+    - FirebaseRemoteConfig (= 3.0.0)
+  - FirebaseABTesting (2.0.0):
+    - FirebaseCore (~> 5.0)
+    - Protobuf (~> 3.5)
+  - FirebaseAnalytics (5.0.1):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - nanopb (~> 0.3)
+  - FirebaseCore (5.0.4):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseInstanceID (3.1.1):
+    - FirebaseCore (~> 5.0)
+  - FirebaseRemoteConfig (3.0.0):
+    - FirebaseABTesting (~> 2.0)
+    - FirebaseAnalytics (~> 5.0)
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - Protobuf (~> 3.5)
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/Logger (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.0)":
     - GoogleToolboxForMac/Defines (= 2.1.0)
   - GTMSessionFetcher/Core (1.1.6)
   - GVRAudioSDK (1.120.0)
   - GVRSDK (1.120.0):
     - GoogleToolboxForMac/Logger (= 2.1.0)
     - GTMSessionFetcher/Core (= 1.1.6)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
+  - Protobuf (3.6.0)
   - ViroKit (1.0):
     - AWSDynamoDB (~> 2.6.7)
     - GVRAudioSDK (= 1.120.0)
@@ -17,6 +52,8 @@ PODS:
   - ViroReact (1.0)
 
 DEPENDENCIES:
+  - Firebase/Core (~> 5.3.0)
+  - Firebase/RemoteConfig (~> 5.3.0)
   - ViroKit (from `../node_modules/react-viro/ios/dist/ViroRenderer/`)
   - ViroReact (from `../node_modules/react-viro/ios/`)
 
@@ -24,10 +61,18 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AWSCore
     - AWSDynamoDB
+    - Firebase
+    - FirebaseABTesting
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - FirebaseRemoteConfig
     - GoogleToolboxForMac
     - GTMSessionFetcher
     - GVRAudioSDK
     - GVRSDK
+    - nanopb
+    - Protobuf
 
 EXTERNAL SOURCES:
   ViroKit:
@@ -38,13 +83,21 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AWSCore: 93ac57c361f6ff9c0749adf9404c4a1a1ecdaa2b
   AWSDynamoDB: b891ec00abf6b58ca850172e4f92ed8de53d1b16
+  Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
+  FirebaseABTesting: 1f50b8d50f5e3469eea54e7463a7b7fe221d1f5e
+  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
+  FirebaseCore: 62f1b792a49bb9e8b4073f24606d2c93ffc352f0
+  FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
+  FirebaseRemoteConfig: 3c57e4644bd6976b671ae0b725cd709f198bd1f5
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
   GVRAudioSDK: 302f0a8f190d855868ea07f246ce4f9b44c392ae
   GVRSDK: 0cb9d0ce06a84d698e61e3db9509766022dcf815
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   ViroKit: 9631f301ef6a3f56116b23d6aac5d5c2307aa368
   ViroReact: 5520f26ac4654e361786c82da3b29ce0402c3c00
 
-PODFILE CHECKSUM: 08d7db15c18c746ff604d294dc24ece46837f88e
+PODFILE CHECKSUM: e261bd9a4e24b1cdf57f64ed5aa106b3ff6be3f5
 
 COCOAPODS: 1.5.3

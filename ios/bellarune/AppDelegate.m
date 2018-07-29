@@ -6,9 +6,8 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
+#import <Firebase.h>
 #import "AppDelegate.h"
-
 #import <ViroReact/VRTBundleURLProvider.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -17,6 +16,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   BOOL enterVrImmediately = YES;
   BOOL usingNgrok = YES;
 

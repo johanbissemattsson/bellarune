@@ -19,6 +19,9 @@ import {
   StatusBar
 } from 'react-native';
 
+import firebase from 'react-native-firebase';
+
+
 import {
   ViroARSceneNavigator
 } from 'react-viro';
@@ -57,6 +60,39 @@ export default class ViroSample extends Component {
     this._renderDotIndicator = this._renderDotIndicator.bind(this);
   }
 
+  componentDidMount() {
+
+    if (__DEV__) {
+      firebase.config().enableDeveloperMode();
+    }
+    
+    // Set default values
+    firebase.config().setDefaults({
+      hasExperimentalFeature: false,
+    });
+    
+    firebase.config().fetch(0)
+      .then(() => {
+        return firebase.config().activateFetched();
+      })
+      .then((activated) => {
+        if (!activated) console.log('Fetched data not activated');
+        return firebase.config().getValue('hasExperimentalFeature');
+      })
+      .then((snapshot) => {
+        const hasExperimentalFeature = snapshot.val();
+    
+        if(hasExperimentalFeature) {
+          console.log("hasExperimentalFeature: TRYE");
+        } else {
+          console.log("hasExperimentalFeature: FALSE")
+        }
+    
+        // continue booting app
+      })
+      .catch(console.error);    
+  }
+  
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
